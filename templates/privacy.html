@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block title %}Privacy Policy — Spendly{% endblock %}
+
+{% block head %}
+<style>
+    .privacy-section {
+        padding: 4rem 2rem 3rem;
+        background: var(--paper);
+    }
+
+    .privacy-inner {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .privacy-section h1 {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 4vw, 2.75rem);
+        color: var(--ink);
+        margin-bottom: 0.5rem;
+        line-height: 1.2;
+    }
+
+    .last-updated {
+        font-size: 0.875rem;
+        color: var(--ink-muted);
+        margin-bottom: 2.5rem;
+    }
+
+    .privacy-content h2 {
+        font-family: var(--font-display);
+        font-size: 1.3rem;
+        color: var(--ink);
+        margin-top: 2rem;
+        margin-bottom: 0.75rem;
+        line-height: 1.2;
+    }
+
+    .privacy-content h2:first-child {
+        margin-top: 0;
+    }
+
+    .privacy-content p {
+        font-size: 0.95rem;
+        color: var(--ink-soft);
+        line-height: 1.8;
+        margin-bottom: 1.25rem;
+    }
+
+    .privacy-content ul {
+        margin: 1.25rem 0 1.25rem 1.5rem;
+    }
+
+    .privacy-content li {
+        color: var(--ink-soft);
+        line-height: 1.8;
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+    }
+
+    .privacy-actions {
+        margin-top: 3rem;
+        text-align: center;
+    }
+
+    .privacy-actions .btn-ghost {
+        display: inline-block;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<section class="privacy-section">
+    <div class="privacy-inner">
+        <h1>Privacy Policy</h1>
+        <p class="last-updated">Last updated: September 30, 2026</p>
+
+        <div class="privacy-content">
+            <h2>1. Introduction</h2>
+            <p>
+                Welcome to Spendly ("the Service"). We are committed to protecting your privacy and ensuring you have
+                a positive experience on our platform. This Privacy Policy explains how we collect, use, disclose, and
+                safeguard your information when you use our Service.
+            </p>
+
+            <h2>2. Information We Collect</h2>
+            <p>
+                We collect information you provide directly to us, such as:
+            </p>
+            <ul>
+                <li>Account registration information (name, email, password)</li>
+                <li>Expense data and transaction details you log</li>
+                <li>Profile information and preferences</li>
+                <li>Communication data when you contact us for support</li>
+            </ul>
+            <p>
+                We also automatically collect certain information about your device and usage:
+            </p>
+            <ul>
+                <li>Device type, browser, and IP address</li>
+                <li>Pages visited and time spent on the Service</li>
+                <li>Cookies and similar tracking technologies</li>
+            </ul>
+
+            <h2>3. How We Use Your Information</h2>
+            <p>
+                We use the information we collect to:
+            </p>
+            <ul>
+                <li>Provide, maintain, and improve the Service</li>
+                <li>Process your expense tracking and generate reports</li>
+                <li>Send administrative updates and support messages</li>
+                <li>Respond to your inquiries and provide customer support</li>
+                <li>Analyze usage patterns to enhance user experience</li>
+                <li>Detect and prevent fraudulent or unauthorized access</li>
+            </ul>
+
+            <h2>4. Data Security</h2>
+            <p>
+                We implement industry-standard security measures to protect your personal information. Your financial
+                data and personal details are encrypted both in transit and at rest. However, no method of transmission
+                over the Internet is 100% secure, and we cannot guarantee absolute security.
+            </p>
+            <p>
+                You are responsible for maintaining the confidentiality of your login credentials. Please notify us
+                immediately if you suspect unauthorized access to your account.
+            </p>
+
+            <h2>5. Data Retention</h2>
+            <p>
+                We retain your personal information for as long as your account is active or as needed to provide the
+                Service. You may request deletion of your account and associated data at any time through your account
+                settings. Some information may be retained for legal, tax, or compliance purposes.
+            </p>
+
+            <h2>6. Third-Party Sharing</h2>
+            <p>
+                We do not sell, trade, or rent your personal information to third parties. We may share information
+                with service providers who assist us in operating our website and conducting business, but only under
+                strict confidentiality agreements. We may disclose information when required by law or to protect our
+                rights and safety.
+            </p>
+
+            <h2>7. Your Privacy Rights</h2>
+            <p>
+                You have the right to:
+            </p>
+            <ul>
+                <li>Access and review your personal information</li>
+                <li>Request corrections to inaccurate data</li>
+                <li>Request deletion of your account and data</li>
+                <li>Opt-out of non-essential communications</li>
+                <li>Export your expense data</li>
+            </ul>
+
+            <h2>8. Cookies and Tracking</h2>
+            <p>
+                Spendly uses cookies to enhance your browsing experience. These help us remember your preferences and
+                track usage patterns. You can disable cookies in your browser settings, but this may limit functionality
+                of the Service.
+            </p>
+
+            <h2>9. Changes to This Privacy Policy</h2>
+            <p>
+                We may update this Privacy Policy from time to time. We will notify you of any material changes by
+                updating the "Last updated" date and posting the revised policy on the Service. Your continued use of
+                Spendly after changes constitutes your acceptance of the updated Privacy Policy.
+            </p>
+
+            <h2>10. Contact Us</h2>
+            <p>
+                If you have questions about this Privacy Policy or our privacy practices, please contact us through
+                the Support section in your Spendly account. We are committed to resolving any privacy concerns.
+            </p>
+        </div>
+
+        <div class="privacy-actions">
+            <a href="{{ url_for('landing') }}" class="btn-ghost">Back to Home</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
