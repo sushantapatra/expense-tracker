@@ -91,7 +91,7 @@ spendly/
 
 - **Flask only** - no FastAPI, no Djanfo, no other web framework
 - **SQLite only** - no PostgreSQL, no SQLAlchemy ORM, no external DB
-- **Vanilla JS only\*** -no React, no JQuery, no npm packages
+- **Vanilla JS only*** -no React, no JQuery, no npm packages
 - **No pip packages** - work within `requirements.txt` as is unless explicitly told otherwise
 
 ## Workflow notes
