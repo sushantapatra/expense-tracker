@@ -60,7 +60,7 @@ def init_db():
 def get_user_by_email(email):
     conn = get_db()
     try:
-        return conn.execute("SELECT id FROM users WHERE email = ?", (email,)).fetchone()
+        return conn.execute("SELECT id, name, email, password_hash FROM users WHERE email = ?", (email,)).fetchone()
     finally:
         conn.close()
 
