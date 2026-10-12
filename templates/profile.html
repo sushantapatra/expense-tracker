@@ -11,18 +11,18 @@
     <div class="profile-inner">
 
         <div class="profile-card user-card">
-            <div class="avatar">{{ user.initials }}</div>
+            <div class="avatar">{% for part in user.name.split()[:2] %}{{ part[0]|upper }}{% endfor %}</div>
             <div class="user-details">
                 <h1 class="user-name">{{ user.name }}</h1>
                 <p class="user-email">{{ user.email }}</p>
-                <p class="user-meta">Member since {{ user.member_since }}</p>
+                <p class="user-meta">Member since {{ user.created_at[:10] }}</p>
             </div>
         </div>
 
         <div class="stats-row">
             <div class="stat-tile">
                 <span class="stat-label">Total spent</span>
-                <span class="stat-value">₹{{ stats.total_spent }}</span>
+                <span class="stat-value">₹{{ "%.2f"|format(stats.total_spent) }}</span>
             </div>
             <div class="stat-tile">
                 <span class="stat-label">Transactions</span>
@@ -30,7 +30,7 @@
             </div>
             <div class="stat-tile">
                 <span class="stat-label">Top category</span>
-                <span class="stat-value">{{ stats.top_category }}</span>
+                <span class="stat-value">{{ stats.top_category or "—" }}</span>
             </div>
         </div>
 
@@ -50,9 +50,13 @@
                         {% for t in transactions %}
                         <tr>
                             <td>{{ t.date }}</td>
-                            <td>{{ t.description }}</td>
+                            <td>{{ t.description or "—" }}</td>
                             <td><span class="badge badge-{{ t.category|lower }}">{{ t.category }}</span></td>
-                            <td class="num">₹{{ t.amount }}</td>
+                            <td class="num">₹{{ "%.2f"|format(t.amount) }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" class="empty-state">No transactions yet.</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -67,12 +71,14 @@
                 <li class="category-row">
                     <div class="category-head">
                         <span class="category-name">{{ c.name }}</span>
-                        <span class="category-total">₹{{ c.total }}</span>
+                        <span class="category-total">₹{{ "%.2f"|format(c.total) }}</span>
                     </div>
                     <div class="bar">
                         <div class="bar-fill w-{{ c.percent }}"></div>
                     </div>
                 </li>
+                {% else %}
+                <li class="empty-state">No spending by category yet.</li>
                 {% endfor %}
             </ul>
         </div>
