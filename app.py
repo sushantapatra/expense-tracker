@@ -26,7 +26,7 @@ def landing():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if session.get("user_id"):
-        return redirect(url_for("landing"))
+        return redirect(url_for("profile"))
 
     if request.method == "POST":
         name = request.form.get("name", "").strip()
@@ -92,7 +92,7 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if session.get("user_id"):
-        return redirect(url_for("landing"))
+        return redirect(url_for("profile"))
 
     if request.method == "POST":
         email = request.form.get("email", "").strip().lower()
@@ -110,7 +110,7 @@ def login():
         session.clear()
         session["user_id"] = user["id"]
         session["user_name"] = user["name"]
-        return redirect(url_for("landing"))
+        return redirect(url_for("profile"))
 
     return render_template("login.html")
 
@@ -136,9 +136,49 @@ def logout():
     return redirect(url_for("landing"))
 
 
+# Hardcoded profile data — replaced with DB queries in Step 5.
+# Widths are rounded to the nearest 5% (minimum 5) to match the w-* classes in profile.css.
+PROFILE_USER = {
+    "name": "Demo User",
+    "email": "demo@spendly.com",
+    "member_since": "January 2026",
+    "initials": "DU",
+}
+
+PROFILE_STATS = {
+    "total_spent": "167.44",
+    "transaction_count": 5,
+    "top_category": "Bills",
+}
+
+PROFILE_TRANSACTIONS = [
+    {"date": "2026-10-09", "description": "Lunch at cafe", "category": "Food", "amount": "12.50"},
+    {"date": "2026-10-07", "description": "Bus fare", "category": "Transport", "amount": "3.20"},
+    {"date": "2026-10-05", "description": "Electricity bill", "category": "Bills", "amount": "85.00"},
+    {"date": "2026-10-03", "description": "Pharmacy", "category": "Health", "amount": "24.99"},
+    {"date": "2026-10-01", "description": "Groceries", "category": "Food", "amount": "41.75"},
+]
+
+PROFILE_CATEGORIES = [
+    {"name": "Bills", "total": "85.00", "percent": 50},
+    {"name": "Food", "total": "54.25", "percent": 30},
+    {"name": "Health", "total": "24.99", "percent": 15},
+    {"name": "Transport", "total": "3.20", "percent": 5},
+]
+
+
 @app.route("/profile")
 def profile():
-    return "Profile page — coming in Step 4"
+    if not session.get("user_id"):
+        return redirect(url_for("login"))
+
+    return render_template(
+        "profile.html",
+        user=PROFILE_USER,
+        stats=PROFILE_STATS,
+        transactions=PROFILE_TRANSACTIONS,
+        categories=PROFILE_CATEGORIES,
+    )
 
 
 @app.route("/expenses/add")
