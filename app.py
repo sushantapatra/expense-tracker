@@ -4,7 +4,17 @@ import sqlite3
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import check_password_hash
 
-from database.db import get_db, init_db, seed_db, get_user_by_email, create_user
+from database.db import (
+    get_db,
+    init_db,
+    seed_db,
+    get_user_by_email,
+    create_user,
+    get_user_by_id,
+    get_expense_summary,
+    get_recent_expenses,
+    get_category_breakdown,
+)
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-only-change-me")
@@ -136,48 +146,23 @@ def logout():
     return redirect(url_for("landing"))
 
 
-# Hardcoded profile data — replaced with DB queries in Step 5.
-# Widths are rounded to the nearest 5% (minimum 5) to match the w-* classes in profile.css.
-PROFILE_USER = {
-    "name": "Demo User",
-    "email": "demo@spendly.com",
-    "member_since": "January 2026",
-    "initials": "DU",
-}
-
-PROFILE_STATS = {
-    "total_spent": "167.44",
-    "transaction_count": 5,
-    "top_category": "Bills",
-}
-
-PROFILE_TRANSACTIONS = [
-    {"date": "2026-10-09", "description": "Lunch at cafe", "category": "Food", "amount": "12.50"},
-    {"date": "2026-10-07", "description": "Bus fare", "category": "Transport", "amount": "3.20"},
-    {"date": "2026-10-05", "description": "Electricity bill", "category": "Bills", "amount": "85.00"},
-    {"date": "2026-10-03", "description": "Pharmacy", "category": "Health", "amount": "24.99"},
-    {"date": "2026-10-01", "description": "Groceries", "category": "Food", "amount": "41.75"},
-]
-
-PROFILE_CATEGORIES = [
-    {"name": "Bills", "total": "85.00", "percent": 50},
-    {"name": "Food", "total": "54.25", "percent": 30},
-    {"name": "Health", "total": "24.99", "percent": 15},
-    {"name": "Transport", "total": "3.20", "percent": 5},
-]
-
-
 @app.route("/profile")
 def profile():
-    if not session.get("user_id"):
+    user_id = session.get("user_id")
+    if not user_id:
+        return redirect(url_for("login"))
+
+    user = get_user_by_id(user_id)
+    if user is None:
+        session.clear()
         return redirect(url_for("login"))
 
     return render_template(
         "profile.html",
-        user=PROFILE_USER,
-        stats=PROFILE_STATS,
-        transactions=PROFILE_TRANSACTIONS,
-        categories=PROFILE_CATEGORIES,
+        user=user,
+        stats=get_expense_summary(user_id),
+        transactions=get_recent_expenses(user_id),
+        categories=get_category_breakdown(user_id),
     )
 
 
